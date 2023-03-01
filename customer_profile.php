@@ -192,7 +192,7 @@ button:hover, a:hover {
 			   <div>
 			  
 			   <form onsubmit="return validateForm()" action="customer_update_profile1.php" method="POST" id="update" name="update" > 
-			   <h2 style "text-color:red";> Update details</h2>
+			   <h2 style ="text-color:red";> Update details</h2>
 			   <input type="text" name="firstname" id="firstname" placeholder="First Name" value="<?php echo $fname;?>" onblur="checkFName()"class="input input1 form-control"  required>
 		
 			     <span id="errorname" class="errmessage">    </span>	

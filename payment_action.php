@@ -218,8 +218,7 @@ $con=mysqli_connect("localhost","root","","organic_shop_db")or die ("Couldn't co
 											echo "<script>
 														
 													</script>";*/
-		if(isset($_POST['payment']))
-		{
+		
 											
 											$d_cutomer_cart=mysqli_query($con,"SELECT * FROM `cart` WHERE email='$mail'");	
 											while($rowcart=mysqli_fetch_array($d_cutomer_cart))
@@ -281,7 +280,7 @@ $con=mysqli_connect("localhost","root","","organic_shop_db")or die ("Couldn't co
 									
 							
 							
-		}	
+			
 	
 	
 	/*else

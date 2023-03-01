@@ -270,6 +270,7 @@ span.price {
 							 
       <p><?php echo $rowp['name']?><span class="price"> <?php echo $rowp['amount'] ;
 	   $ctot= $ctot+$rowp['amount'];
+	   $_SESSION['amt1'] = $ctot;
 	  ?></span></p>
   
 					<?php } ?>

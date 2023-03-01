@@ -1,6 +1,7 @@
 
 <?php
 session_start();
+$ttamt = $_SESSION['amt1'];
 if(isset($_SESSION['alogin'])){
 	$mail=$_SESSION['alogin'];
 	//$pname=$_SESSION['name'];
@@ -165,6 +166,8 @@ span.price {
 
 			});
 		</script>
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 </head>
 <body> 
@@ -271,7 +274,7 @@ span.price {
 
           <div class="col-100">
             <h3>Payment</h3>
-			<h4>Cash On Delivery Only Available !</h4>
+			<h4>Online payment Only Available !</h4>
             <!--<label for="fname">Accepted Cards</label>
             <div class="icon-container">
               <i class="fa fa-cc-visa" style="color:navy;"></i>
@@ -304,7 +307,7 @@ span.price {
 													<input type="text" name="expiration" id="expiration" style="color:grey" value="" >
               
 -->
-			<button class="btn" name="payment" id="payment"><span>Confirm Order </span></button>
+		<input type="button" name="pay" id ="rzp-button1" value="pay now" onclick="pay_now()">
 		<!--	<a href="PHP_Bolt-master">pay </a>
 		-->
           </div>
@@ -451,7 +454,48 @@ span.price {
 		<div class="footer-bottom">
 			<div class="container">
 				
-				
+	
+			
+			<script>
+    function pay_now(){
+
+    var name=jQuery('#name').val();
+    var amt=<?php echo $ttamt; ?>;
+    var options = {
+    "key": "rzp_test_sTxnog5fKY3bok",
+    "amount": amt*100, 
+    "currency": "INR",
+    "name": "organic shopping",
+    "description": "Test Transaction",
+    "image": "https://drive.google.com/file/d/1FJCNPPMhML96z3s4IrR8-yGU4A6HLm2X/view?usp=share_link",
+    "handler":function(response){
+        console.log(response);
+        jQuery.ajax({
+            type:'POST',
+            url:'payment_action.php',
+            data:"payment_id="+response.razorpay_payment_id+"&amt="+amt+"&name="+name,
+            success:function(result){
+				alert("payment success");
+                window.location.href="view_products.php";
+            }
+
+        })
+        // if(response){
+        //     window.location.href="/adsol/index.php";
+        // }
+       
+
+    }
+};
+
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+
+}
+</script>
 				
 				
 </body>
