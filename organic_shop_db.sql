@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2023 at 05:22 PM
+-- Generation Time: Apr 03, 2023 at 06:20 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -41,13 +41,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`caid`, `email`, `pid`, `cart_qunty`, `amount`, `old_stock`) VALUES
-(69, 'georgebenny2023a@mca.ajce.in', 7, '3', '390', '8'),
-(70, 'bilal@gmail.com', 7, '3', '300', '10'),
-(71, 'bilal@gmail.com', 8, '34', '3060', '34'),
-(72, 'bilal@gmail.com', 9, '1', '50', '67'),
-(73, 'binu@gmail.com', 7, '3', '300', '10'),
-(74, 'binu@gmail.com', 6, '2', '70', '5'),
-(75, 'bilal@gmail.com', 6, '4', '140', '5');
+(71, 'bilal@gmail.com', 8, '34', '3060', '34');
 
 -- --------------------------------------------------------
 
@@ -103,7 +97,11 @@ INSERT INTO `tbl_customer_delv_address` (`delv_adres_id`, `email`, `fname`, `Mob
 (37, 'abilahari2023a@mca.ajce.in', 'Amal jyothi College Of Engineering', '06238681837', 'Poonjar', 'fdgfhj', 'Poonjar', '686581', '2', 'VALID'),
 (38, 'bilal@gmail.com', 'bilal', '7238681837', 'Poonjar', 'iojij', 'Poonjar', '686581', '2', 'VALID'),
 (39, 'bilal@gmail.com', 'babu', '56565676', 'kkii', 'yttt', 'ppp', '676778', '', 'VALID'),
-(40, 'binu@gmail.com', 'binu', '06238681837', 'hgj', 'poonjar', 'tuyuy', '686581', '', 'VALID');
+(40, 'binu@gmail.com', 'binu', '06238681837', 'hgj', 'poonjar', 'tuyuy', '686581', '', 'VALID'),
+(41, 'tiny@gmail.com', 'tiny', '06238681837', 'pp', 'iojij', 'Poonjar', '686581', '', 'VALID'),
+(42, 'ankit2023a@mca.ajce.in', 'ankith', '6238681837', 'pathnam', 'poonjar', 'pathnam', '686581', '1', 'VALID'),
+(43, 'vineethp2023b@mca.ajce.in', 'VINEETH', '9188004165', 'REVATHY', 'ERAVUKADU', 'ALAPPUZHA', '688002', '1', 'VALID'),
+(44, 'tiny@gmail.com', 'tiny', '3456789765', 'ert', 'okp', 'ert', '456', '1', 'VALID');
 
 -- --------------------------------------------------------
 
@@ -131,7 +129,23 @@ CREATE TABLE `tbl_customer_order` (
 INSERT INTO `tbl_customer_order` (`customer_order_id`, `email`, `stock_product_id`, `delv_adres_id`, `purchase_qty`, `purchase_price`, `order_date`, `delivery_date`, `status`, `otp`) VALUES
 (54, 'abilahari2023a@mca.ajce.in', 6, 37, 3, '105', '2023-02-23 20:47:53', '2023-02-23', 'order placed', ''),
 (55, 'abilahari2023a@mca.ajce.in', 7, 37, 4, '400', '2023-02-23 20:49:46', '2023-02-23', 'order placed', ''),
-(56, 'abilahari2023a@mca.ajce.in', 9, 37, 7, '350', '2023-02-23 21:49:12', '2023-02-23', 'order placed', '');
+(56, 'abilahari2023a@mca.ajce.in', 9, 37, 7, '350', '2023-02-23 21:49:12', '2023-02-23', 'order placed', ''),
+(57, 'tiny@gmail.com', 9, 41, 3, '150', '2023-02-24 09:06:18', '2023-02-24', 'order placed', ''),
+(58, 'tiny@gmail.com', 6, 41, 2, '70', '2023-02-24 09:08:07', '2023-02-24', 'order placed', ''),
+(59, 'tiny@gmail.com', 8, 41, 1, '90', '2023-02-24 09:17:31', '2023-02-24', 'order placed', ''),
+(60, 'tiny@gmail.com', 8, 41, 1, '90', '2023-02-24 10:18:14', '2023-02-24', 'order placed', ''),
+(61, 'tiny@gmail.com', 8, 41, 2, '180', '2023-02-24 10:27:04', '2023-02-24', 'order placed', ''),
+(62, 'tiny@gmail.com', 8, 41, 3, '270', '2023-02-24 14:31:42', '2023-02-24', 'order placed', ''),
+(63, 'ankit2023a@mca.ajce.in', 8, 42, 2, '180', '2023-03-01 10:50:08', '2023-03-01', 'order placed', ''),
+(64, 'ankit2023a@mca.ajce.in', 7, 42, 5, '500', '2023-03-01 10:50:10', '2023-03-01', 'order placed', ''),
+(65, 'tiny@gmail.com', 8, 41, 1, '90', '2023-03-01 11:19:57', '2023-03-01', 'order placed', ''),
+(66, 'tiny@gmail.com', 9, 41, 1, '50', '2023-03-01 11:19:57', '2023-03-01', 'order placed', ''),
+(67, 'tiny@gmail.com', 11, 41, 1, '100', '2023-03-01 11:19:57', '2023-03-01', 'order placed', ''),
+(68, 'binu@gmail.com', 7, 40, 3, '300', '2023-03-01 14:19:44', '2023-03-01', 'order placed', ''),
+(69, 'binu@gmail.com', 6, 40, 2, '70', '2023-03-01 14:19:44', '2023-03-01', 'order placed', ''),
+(70, 'binu@gmail.com', 8, 40, 5, '450', '2023-03-01 14:19:44', '2023-03-01', 'order placed', ''),
+(71, 'vineethp2023b@mca.ajce.in', 6, 43, 3, '105', '2023-03-01 15:28:09', '2023-03-01', 'order placed', ''),
+(72, 'tiny@gmail.com', 8, 44, 20, '1800', '2023-04-03 09:36:24', '2023-04-03', 'order placed', '');
 
 -- --------------------------------------------------------
 
@@ -155,11 +169,16 @@ INSERT INTO `tbl_login` (`email`, `user_type_id`, `password`, `status`) VALUES
 ('abilahari2023a@mca.ajce.in', 2, '58571663', 'ACTIVE'),
 ('admin@gmail.com', 1, 'Admin00#', 'ACTIVE'),
 ('alen@gmail.com', 3, 'Alen@123', 'ACTIVE'),
+('ankit2023a@mca.ajce.in', 2, 'Ankit@123', 'ACTIVE'),
 ('anton@gmail.com', 3, 'Anton@123', 'ACTIVE'),
+('ben2023a@mca.ajce.in', 3, 'Benjhonson@123', 'ACTIVE'),
 ('bilal@gmail.com', 2, 'Bilal@123', 'ACTIVE'),
 ('binu@gmail.com', 2, 'Binu@123', 'ACTIVE'),
 ('georgebenny2023a@mca.ajce.in', 2, 'GeorgeBenny@1234', 'ACTIVE'),
-('rocky@gmail.com', 3, 'Rocky@123', 'ACTIVE');
+('raman@gmail.com', 2, 'Raman@123', 'ACTIVE'),
+('rocky@gmail.com', 3, 'Rocky@123', 'ACTIVE'),
+('tiny@gmail.com', 2, 'Tiny@123', 'ACTIVE'),
+('vineethp2023b@mca.ajce.in', 2, 'Vineeth@13', 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -185,10 +204,9 @@ CREATE TABLE `tbl_product` (
 --
 
 INSERT INTO `tbl_product` (`pid`, `rid`, `product_category_id`, `name`, `price`, `des`, `qunty`, `date`, `image`, `picStatus`) VALUES
-(6, 56, 15, 'apple', '35', 'good red apple', 2, '2022-11-24', 's.jpg', 0),
-(7, 59, 15, 'mango', '100', 'natural mangoo', 6, '2022-11-24', 'g.JPG', 0),
-(8, 61, 14, 'chilly', '90', 'oraganic chilly', 34, '2022-11-26', 'i.jpg', 0),
-(9, 59, 15, 'orange', '50', 'very natural', 60, '2022-11-25', 'orange.jpeg', 0);
+(8, 61, 14, 'chilly', '90', 'oraganic chilly', 1, '2022-11-26', 'i.jpg', 0),
+(11, 66, 14, 'tomattoo', '100', 'oraganic', 25, '2023-03-03', 'o.jpg', 0),
+(82, 59, 14, 'Beans', '30', 'natural', 4, '2023-04-06', 'bb.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -237,7 +255,12 @@ INSERT INTO `tbl_registration` (`rid`, `fname`, `lname`, `phone_no`, `email`, `p
 (59, 'anton', 'mukaan', '5643789765', 'anton@gmail.com', 'poddaaa'),
 (60, 'bilal', 'jhon', '7868766765', 'bilal@gmail.com', 'pikaaa'),
 (61, 'rocky', 'baii', '5765564564', 'rocky@gmail.com', 'pala'),
-(62, 'binu', 'babu', '5678654345', 'binu@gmail.com', 'poonjar');
+(62, 'binu', 'babu', '5678654345', 'binu@gmail.com', 'poonjar'),
+(63, 'qwert', 'tom', '4576543135', 'tiny@gmail.com', 'ppp'),
+(64, 'raman', 'mon', '6238681837', 'raman@gmail.com', 'ppoo'),
+(65, 'ankit', 'bigi', '6238681837', 'ankit2023a@mca.ajce.in', 'Pathanam'),
+(66, 'ben', 'jhonson', '6238681837', 'ben2023a@mca.ajce.in', 'Pala'),
+(67, 'VINEETH', 'PRADEEP', '9188004165', 'vineethp2023b@mca.ajce.in', 'ALAPPUZHA');
 
 -- --------------------------------------------------------
 
@@ -335,7 +358,7 @@ ALTER TABLE `tbl_user_type`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `caid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `caid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `tbl_bank_info`
@@ -347,31 +370,31 @@ ALTER TABLE `tbl_bank_info`
 -- AUTO_INCREMENT for table `tbl_customer_delv_address`
 --
 ALTER TABLE `tbl_customer_delv_address`
-  MODIFY `delv_adres_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `delv_adres_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer_order`
 --
 ALTER TABLE `tbl_customer_order`
-  MODIFY `customer_order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `customer_order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `tbl_product_category`
 --
 ALTER TABLE `tbl_product_category`
-  MODIFY `product_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `product_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tbl_registration`
 --
 ALTER TABLE `tbl_registration`
-  MODIFY `rid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `rid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `tbl_user_type`

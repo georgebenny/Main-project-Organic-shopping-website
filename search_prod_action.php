@@ -1,35 +1,37 @@
-
 <?php
 session_start();
 if(isset($_SESSION['alogin'])){
 	$mail=$_SESSION['alogin'];
-	//$pname=$_SESSION['name'];
-	//$_SESSION['rid']=$rid;
+	$con=mysqli_connect("localhost","root","","organic_shop_db")or die ("Couldn't connect");
+}
+	?>
 	
-?>
-
-
-
 <?php
-$con=mysqli_connect("localhost","root","","organic_shop_db")or die ("Couldnt connect");
+if(isset($_POST['search'])){
+$product=$_POST['product'];
+$view="SELECT a.*, b.* from tbl_product a INNER JOIN tbl_registration b ON a.qunty>=1 and a.rid = b.rid and a.name LIKE '%$product%'";
 
-$disp="SELECT  *from tbl_product ORDER BY name ASC";
+$d_user=mysqli_query($con,$view);
+ 
 
-$disp_result=mysqli_query($con,$disp);
-$prodname="";
+$x=mysqli_num_rows($d_user);
 
-$viewbrand="select * FROM tbl_product ,tbl_registration WHERE tbl_product.rid=tbl_registration.rid";
+if($x==0)
 
-//$viewbrand="Select * from tbl_product where name=$pname ORDER BY name ASC";
-$d_seller_brand=mysqli_query($con,$viewbrand);
+{
+	
+	echo"<script>alert('Search item not available !View our product list');
+	window.location='view_products.php';
+	</script>";
+	
+}
 
 ?>
-
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>organicshoppi| view products</title>
+<title>UserHome</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!--theme-style-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
@@ -37,13 +39,11 @@ $d_seller_brand=mysqli_query($con,$viewbrand);
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!--fonts-->
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:10,30,60,70,80' rel='stylesheet' type='text/css'>
 <!--//fonts-->
 <script src="js/jquery.min.js"></script>
 
-
-<!--script-->
-<style> 
+ <style> 
 								.imagesize { 
 									width:60%; 
 									height:150%; 
@@ -83,31 +83,35 @@ $d_seller_brand=mysqli_query($con,$viewbrand);
 								width: 15%;
 								border: 1px solid;
 								position: relative;
-								background: #FA1818;
+								background: url(img-sp.png) no-repeat 14px 6px #FA1818;
 							}
 							.w3l_search input[type="submit"]:hover{
 								background: url(img-sp.png) no-repeat 14px 5px #84C639;
 							}
 							</style>
+
+
+							<!-- STYLE FOR SEARCH  PRODUCT -->
+<!--script-->
 </head>
 <body> 
 	<!--header-->
 	<div class="header">
 		<div class="top-header">
 			<div class="container">
-				<div class="top-header-left">
+				<<div class="top-header-left">
 					<ul class="support">
 						<li><a href="#"><label> </label></a></li>
 						<li><a href="#">24x7 live<span class="live"> support</span></a></li>
 					</ul>
 					<ul class="support">
 						<li class="van"><a href="#"><label> </label></a></li>
-						<li><a href="#"><span class="live"></span></a></li>
+						<li><a href="#">Free shipping <span class="live">on order over 500</span></a></li>
 					</ul>
 					<div class="clearfix"> </div>
 				</div>
-				<div class="top-header-right">
-					<!--<div class="down-top">		
+				<!--<div class="top-header-right">
+					<div class="down-top">		
 						  <select class="in-drop">
 							  <option value="English" class="in-of">English</option>
 							  <option value="Japanese" class="in-of">Japanese</option>
@@ -121,10 +125,10 @@ $d_seller_brand=mysqli_query($con,$viewbrand);
 						  <option value="Dollar" class="in-of">Dollar</option>
 						  <option value="Yen" class="in-of">Yen</option>
 						  <option value="Euro" class="in-of">Euro</option>
-							</select>-->
+							</select>
 					 </div>
 					<div class="clearfix"> </div>	
-				</div>
+				</div>-->
 				<div class="clearfix"> </div>		
 			</div>
 		</div>
@@ -133,56 +137,66 @@ $d_seller_brand=mysqli_query($con,$viewbrand);
 				<div class="header-bottom-left">
 					<div class="logo">
 						<font size="4"><strong><i> <b><p style="color:red;">ORGANICSHOPPING </p> </b></i></strong></font>
-					</div>
+					</div>	
 					<!--<div class="search">
 						<input type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" >
 						<input type="submit"  value="SEARCH">
 
 					</div>-->
-					
-					
-					
-					
-					
-					<div class="w3l_search" style="margin-top:5px;margin-left:250px">
-									<form action="search_prod_action.php" method="POST">
-										<input type="text" name="product" id="product" placeholder="Search a product..." required>
-										<input type="submit" name="search" id="search" value="search ">
-										
-									</form>
-						</div>
 					<div class="clearfix"> </div>
 				</div>
+				
+					<!-- CODE FOR SEARCH  PRODUCT -->
+								
+				<div class="header-bottom-left" 	>
+				
+						<div class="w3l_search" style="margin-top:5px;margin-left:250px">
+									<form action="search_prod_action.php" method="POST">
+										<input type="text" name="product" id="product" placeholder="Search a product..." required>
+										<input type="submit" name="search" id="search" value=" ">
+									</form>
+						</div>
+		
+
+				</div>
+				
+							<!-- END CODE FOR SEARCH  PRODUCT -->
+				
 				<div class="header-bottom-right">					
-						<div class="account"><a href="#"><span> </span><?php echo $mail?></a></div>
+						<!--<div class="account"><a href="../index.php"><span> </span>YOUR ACCOUNT</a></div>-->
+						
+				
+						<div class="account"><a href="customer_home.php"><span> </span>HOME</a></div>
 							<ul class="login">
-								<li><a href="logout.php"><span> </span>LOGOUT</a></li> 
-							
+                           
+								<!--<div class="account"><a href="userprofile.php"><span> </span>Your Account</a></div>-->
+								<li ><a href="logout.php">LOGOUT</a></li>
 							</ul>
-						<div class="cart"><a href="cart_view.php"><span> </span>CART</a></div>
+						<div class="cart"><a href="cart_view.php "><span> </span>CART</a></div>
+						
+
+
 					<div class="clearfix"> </div>
 				</div>
 				<div class="clearfix"> </div>	
+				
 			</div>
 		</div>
 	</div>
 	<!---->
+	
 	<!-- start content -->
-	
-	
-	
-	
 	<div class="container">
 		
-	<div class="women-product">
-		<div class=" w_content">
-			<div class="women">
+	<div class="women-product" >
+	<div class=" w_content">
+		<div class="women">
 				<a href="view_products.php"><b><h4>PRODUCTS <span></span> </b></h4></a>
 				<ul class="w_nav">
 					<li>Sort : </li>
-					<li><a class="active" href="#">All</a></li> |
-			     	<li><a  href="#">Fruits</a></li> |
-			     	<li><a href="#">Vegetables </a></li> 
+					<li><a class="active" href="view_products.php">All</a></li> |
+			     	<li><a  href="view_products_fruit.php">Fruits</a></li> |
+			     	<li><a href="view_products_vegetables.php">Vegetables </a></li> 
 			     	<!--
 			     	<li><a href="#">price: Low High </a></li> -->
 			     <div class="clearfix"> </div>	
@@ -190,28 +204,25 @@ $d_seller_brand=mysqli_query($con,$viewbrand);
 			     <div class="clearfix"> </div>	
 			</div>
 		</div>
+		
 		<!-- grids_of_4 -->
-		<div class="grid-product">
+		<div class="grid-product" >
 		
-		
-		
-		
-			<?php while ($rowp=mysqli_fetch_array($d_seller_brand))
-					{
-						
-						?>
-		
-		
-		
-		
-		  <div class="  product-grid">
+		  <?php while($rowp=mysqli_fetch_array( $d_user)){
+			  
+			  
+			  
+		  	?>
+		  <div class="product-grid" >
 		  
-		   <form  action="view_single.php" method="POST" name="prod" id="prod" >
+		  
+		  
+		  <form  action="view_single.php" method="POST" name="prod" id="prod" >
 			<div class="content_box">
 			
 			
 			   	<div class="left-grid-view grid-view-left">
-			   	   	 <img src="images/<?php echo $rowp['image'] ?>"  class="img-responsive watch-right" alt="image" style="width:300px;height:200px;"  >
+			   	   	 <img src="images/<?php echo $rowp['image'] ?>"  class="img-responsive watch-right" alt="image"/ style="width:300px;height:200px;"  >
 				   	   	<div class="mask">
 	                        <div class="info">Quick View</div>
 			            </div>
@@ -223,9 +234,9 @@ $d_seller_brand=mysqli_query($con,$viewbrand);
 					
 					
 				    <!-- <p><?php   echo $rowp['des'] ?> </p>-->
-				    <h3 style="color:red;"> Rs.<?php   echo $rowp['price'] ?> for 1 Kg</h3>
-				       <!--Available Quntity <?php   echo $rowp['qunty'] ?> Kg</h6></b><br>-->
-					  seller: <?php   echo $rowp['fname'] ?>
+				    <h3 style="color:red;"> Rs.<?php   echo $rowp['price'] ?></h3>
+				       Available Quntity <?php   echo $rowp['qunty'] ?> Kg</h6></b><br>
+					   seller: <?php   echo $rowp['fname'] ?>
 				<input type="hidden" name="prod_id" id="prod_id" value="<?php   echo $rowp['pid'] ?>" hidden>
 				</br>
 			  			</br>	  <input type="submit" name="view_detail" id="view_detail" value="View Details" style="color:white;background-color:red;padding:10px" >
@@ -235,16 +246,18 @@ $d_seller_brand=mysqli_query($con,$viewbrand);
               </div>
 			  
 			  </form>
-			  	<?php }?>
+			
+			
+          <?php }?>
+			 
+                 
 			 
 			
-				 
-				  
-				 
-			<div class="clearfix"> </div>
+			
+			
 		</div>
 	</div>
-	<div class="sub-cate">
+	 <div class="sub-cate">
 				<div class=" top-nav rsidebar span_1_of_left">
 					<h3 class="cate">MENU</h3>
 		   <ul class="menu">
@@ -265,9 +278,8 @@ $d_seller_brand=mysqli_query($con,$viewbrand);
 				
 				<!--<li><a href="product.php">add product</a></li>-->
 				<li><a href="view_products.php">View Products</a></li>
-				<li><a href="customer_view_orders1.php">My Orders</a></li>
-				  <li><a href="#">My Complaints</a></li>
-			
+					<li><a href="customer_view_orders1.php">My Orders</a></li>
+			        <li><a href="customer_complaints.php">My Complaints</a></li>
 				
 				
 				<!--<li class="menu-kid-left"><a href="contact.html">Contact us</a></li-->
@@ -295,112 +307,26 @@ $d_seller_brand=mysqli_query($con,$viewbrand);
 			
 			});
 		</script>
-				
-	   		     		<!--<a href="single.html">--><img class="img-responsive chain" src="images/a.jpg" alt=" " /><!--</a>-->	   		     		
-	   		     		<!--<div class="grid-chain-bottom chain-watch">
-		   		     		<span class="actual dolor-left-grid">300$</span>
-		   		     		<span class="reducedfrom">500$</span>  
-		   		     		<h6>Lorem ipsum dolor</h6>  		     			   		     										
-	   		     		</div>-->
-	   		     
-	   		     	<!-- <a class="view-all all-product" href="product.html">VIEW ALL PRODUCTS<span> </span></a> -->	
+					
+	   		     	<!-- <a class="view-all all-product" href="product.php">VIEW ALL PRODUCTS<span> </span></a> -->	
+					<img class="img-responsive chain" src="images/a.jpg" alt=" " />
 			</div>
-	<div class="clearfix"> </div>
-</div>
-	<!---->
-	<div class="footer">
-		<!--<div class="footer-top">
-			<div class="container">
-				<div class="latter">
-					<h6>NEWS-LETTER</h6>
-					<div class="sub-left-right">
-						<form>
-							<input type="text" value="Enter email here"onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter email here';}" />
-							<input type="submit" value="SUBSCRIBE" />
-						</form>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<!--<div class="latter-right">
-					<p>FOLLOW US</p>
-					<ul class="face-in-to">
-						<li><a href="#"><span> </span></a></li>
-						<li><a href="#"><span class="facebook-in"> </span></a></li>
-						<div class="clearfix"> </div>
-					</ul>
 					<div class="clearfix"> </div>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
 		</div>
 		<div class="footer-bottom">
-			<!--<div class="container">
-				<div class="footer-bottom-cate">
-					<h6>CATEGORIES</h6>
-					<ul>
-						<li><a href="#">Curabitur sapien</a></li>
-						<li><a href="#">Dignissim purus</a></li>
-						<li><a href="#">Tempus pretium</a></li>
-						<li ><a href="#">Dignissim neque</a></li>
-						<li ><a href="#">Ornared id aliquet</a></li>
-						<li><a href="#">Ultrices id du</a></li>
-						<li><a href="#">Commodo sit</a></li>
-						<li ><a href="#">Urna ac tortor sc</a></li>
-						<li><a href="#">Ornared id aliquet</a></li>
-						<li><a href="#">Urna ac tortor sc</a></li>
-						<li ><a href="#">Eget nisi laoreet</a></li>
-						<li ><a href="#">Faciisis ornare</a></li>
-					</ul>
-				</div>
-				<div class="footer-bottom-cate bottom-grid-cat">
-					<h6>FEATURE PROJECTS</h6>
-					<ul>
-						<li><a href="#">Curabitur sapien</a></li>
-						<li><a href="#">Dignissim purus</a></li>
-						<li><a href="#">Tempus pretium</a></li>
-						<li ><a href="#">Dignissim neque</a></li>
-						<li ><a href="#">Ornared id aliquet</a></li>
-						<li><a href="#">Ultrices id du</a></li>
-						<li><a href="#">Commodo sit</a></li>
-					</ul>
-				</div>
-				<div class="footer-bottom-cate">
-					<h6>TOP BRANDS</h6>
-					<ul>
-						<li><a href="#">Curabitur sapien</a></li>
-						<li><a href="#">Dignissim purus</a></li>
-						<li><a href="#">Tempus pretium</a></li>
-						<li ><a href="#">Dignissim neque</a></li>
-						<li ><a href="#">Ornared id aliquet</a></li>
-						<li><a href="#">Ultrices id du</a></li>
-						<li><a href="#">Commodo sit</a></li>
-						<li ><a href="#">Urna ac tortor sc</a></li>
-						<li><a href="#">Ornared id aliquet</a></li>
-						<li><a href="#">Urna ac tortor sc</a></li>
-						<li ><a href="#">Eget nisi laoreet</a></li>
-						<li ><a href="#">Faciisis ornare</a></li>
-					</ul>
-				</div>
-				<div class="footer-bottom-cate cate-bottom">
-					<h6>OUR ADDERSS</h6>
-					<ul>
-						<li>Aliquam metus  dui. </li>
-						<li>orci, ornareidquet</li>
-						<li> ut,DUI.</li>
-						<li >nisi, dignissim</li>
-						<li >gravida at.</li>
-						<li class="phone">PH : 6985792466</li>
-						<li class="temp"> <p class="footer-class">Design by <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p></li>
-					</ul>
-				</div>
+			<div class="container">
+				
+				
+				
 				<div class="clearfix"> </div>
 			</div>
 		</div>
 	</div>
 </body>
 </html>
-
-
 <?php
 }
 else

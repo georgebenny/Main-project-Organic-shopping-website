@@ -3,6 +3,7 @@
 session_start();
 if(isset($_SESSION['alogin'])){
 	$mail=$_SESSION['alogin'];
+}
 ?>
 
 
@@ -346,107 +347,97 @@ $("#image").change(function () {
 
 <?php
 
-if(isset($_POST["submit2"]))
-{
-$cat=$_POST["cat"];	
-$name=$_POST["name"];
-$price=$_POST["price"];
-$des=$_POST["des"];
-$qunty=$_POST["qunty"];
-$date=$_POST["date"];
-//$image=$_POST["image"];
-$Status=0;
-$flag=0;
-$prodc="";
+	if(isset($_POST["submit2"])){
+		$cat=$_POST["cat"];	
+		$name=$_POST["name"];
+		$price=$_POST["price"];
+		$des=$_POST["des"];
+		$qunty=$_POST["qunty"];
+		$date=$_POST["date"];
+		//$image=$_POST["image"];
+		$Status=0;
+		$flag=0;
+		$prodc="";
 
-$user="Select rid from tbl_registration WHERE email='$mail'";
+		$user="Select rid from tbl_registration WHERE email='$mail'";
 
-$userid=mysqli_query($con,$user);
-$rid_row=mysqli_fetch_array($userid);
-$rid=$rid_row['rid'];
-$checknamep="Select * from tbl_product WHERE name='$name' and rid='$rid'";
-$disp_presult=mysqli_query($con,$checknamep);
-while($row=mysqli_fetch_array($disp_presult))
-{
-$prodc=$row['name'];
+		$userid=mysqli_query($con,$user);
+		$rid_row=mysqli_fetch_array($userid);
+		$rid=$rid_row['rid'];
+		$checknamep="Select * from tbl_product WHERE name='$name' and rid='$rid'";
+		$disp_presult=mysqli_query($con,$checknamep);
+		while($row=mysqli_fetch_array($disp_presult)){
+			$prodc=$row['name'];
+			if((strcmp($prodc,$name) == 0)){	
+				$flag=$flag+1;
+				echo "<script type='text/javascript'>alert('The category is already Existing'); 
+				
+				window.location='product.php';</script>";
+				
+				break;
+			}
+		}
+		if($flag==0){	
+			
+			$image=$_FILES["image"]["name"];
+			if(copy($_FILES['image']['tmp_name'], "predict_images/" . $_FILES["image"]["name"])){
+				$url = 'http://localhost:5000/';
+				$predict_image= isset($image) ? $image : "sample_image_for_predict.jpg";
+				$data = array('predict_image' => $predict_image);
 
+				$headers = array(
+					'Content-Type: application/json',
+				);
 
-if((strcmp($prodc,$name) == 0))
-  	{	
-		$flag=$flag+1;
-		echo "<script type='text/javascript'>alert('The category is already Existing'); 
-		
-		window.location='product.php';</script>";
-		
-		break;
+				$options = array(
+					CURLOPT_URL => $url,
+					CURLOPT_POST => true,
+					CURLOPT_POSTFIELDS => json_encode($data),
+					CURLOPT_HTTPHEADER => $headers,
+					CURLOPT_RETURNTRANSFER => true,
+				);
+				$curl = curl_init();
+				curl_setopt_array($curl, $options);
+				$response = curl_exec($curl);
+				if($response != null && !empty($response)) {
+					$predict_res_value= json_decode($response)->predict_res;
+					echo "<script>alert('Defect Percentage of the uploaded image is ".$predict_res_value."%');</script>";
+				} else {
+					echo "<script>alert('Prediction Failed !!');</script>";
+				}
+				curl_close($curl);
+			}
+			else{
+				echo "<script>alert('Prediction Failed due to : File not exists !!');</script>";
+			}
+			
+			
+			move_uploaded_file($_FILES["image"]["tmp_name"],"images/" . $_FILES["image"]["name"]);
+			$image_path = $_FILES["image"]["name"];
+			$rid=$rid_row['rid'];
+			$q_ins1="insert into tbl_product(rid,product_category_id,name,price,des,qunty,date,image,picStatus) values ('$rid','$cat','$name','$price','$des',$qunty,'$date','$image','$Status')";
+			$ins=mysqli_query($con,$q_ins1);
+	
+			if($ins==TRUE){
+				echo "<script type='text/javascript'>
+						alert('New product added successfully'); 
+						window.location='product.php';
+						</script>";
+			}
+			else{
+				echo "<script type='text/javascript'>
+							alert('Not added'); 
+							window.location='product.php';				
+							</script>";
+			}
+		}
+		else
+		{
+			echo "<script type='text/javascript'>
+						
+						alert('The product is already added '); 
+						window.location='product.php';				
+						</script>";
+		}
 	}
-}
-
-
-
-	
-if($flag==0)
-
-{	
-
-
-						$allowedExtsp = array("jpg");
-						$image=$_FILES["image"]["name"];
-						$tempp = explode(".", $_FILES["image"]["name"]);
-						$extensionp = end($tempp);
-						move_uploaded_file($_FILES["image"]["tmp_name"],"uploads/products/" . $_FILES["image"]["name"]);
-						
-						
-						
-						
-						
-						
-	$rid=$rid_row['rid'];
-
-	
-	
-	$q_ins1="insert into tbl_product(rid,product_category_id,name,price,des,qunty,date,image,picStatus) values ('$rid','$cat','$name','$price','$des',$qunty,'$date','$image','$Status')";
-
-	
-	
-	$ins=mysqli_query($con,$q_ins1);
-		
-if($ins==TRUE)
-{
-	
-		echo "<script type='text/javascript'>
-				
-				alert('New product added successfully'); 
-				window.location='product.php';
-				</script>";
-}
-else
-{
-	
-	echo "<script type='text/javascript'>
-				
-				alert('Not added'); 
-				window.location='product.php';				
-				</script>";
-}
-
-}
-else
-{
-	echo "<script type='text/javascript'>
-				
-				alert('The product is already added '); 
-				window.location='product.php';				
-				</script>";
-}
-
-}
-
-?>
-<?php
-}
-else
-{
-	header('Location:login.php');
-}
 ?>
