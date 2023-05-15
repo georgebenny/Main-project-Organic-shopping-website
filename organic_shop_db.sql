@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2023 at 06:20 AM
+-- Generation Time: May 15, 2023 at 08:56 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -68,6 +68,30 @@ CREATE TABLE `tbl_bank_info` (
 INSERT INTO `tbl_bank_info` (`bank_info_id`, `user_type_id`, `name_on_card`, `card_number`, `CVV`, `expiration_date`, `balance_amount`, `status`, `otp`) VALUES
 (1, 2, 'Anu', '4532123485', '497', '12/22', '54134', 'VALID', '1948929281'),
 (2, 3, 'Seller', '5674565545675645', '498', '13/23', '62248', 'VALID', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_complaints`
+--
+
+CREATE TABLE `tbl_complaints` (
+  `complaints_id` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `customer_order` int(11) NOT NULL,
+  `stock_product_id` int(11) NOT NULL,
+  `complaint_message` varchar(100) NOT NULL,
+  `replay_message` varchar(50) NOT NULL DEFAULT 'Not Yet Replied',
+  `status` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_complaints`
+--
+
+INSERT INTO `tbl_complaints` (`complaints_id`, `email`, `customer_order`, `stock_product_id`, `complaint_message`, `replay_message`, `status`) VALUES
+(10, 'tiny@gmail.com', 59, 8, ' not good', 'Not Yet Replied', 'new'),
+(11, 'tiny@gmail.com', 75, 103, 'roated', 'Not Yet Replied', 'new');
 
 -- --------------------------------------------------------
 
@@ -145,7 +169,10 @@ INSERT INTO `tbl_customer_order` (`customer_order_id`, `email`, `stock_product_i
 (69, 'binu@gmail.com', 6, 40, 2, '70', '2023-03-01 14:19:44', '2023-03-01', 'order placed', ''),
 (70, 'binu@gmail.com', 8, 40, 5, '450', '2023-03-01 14:19:44', '2023-03-01', 'order placed', ''),
 (71, 'vineethp2023b@mca.ajce.in', 6, 43, 3, '105', '2023-03-01 15:28:09', '2023-03-01', 'order placed', ''),
-(72, 'tiny@gmail.com', 8, 44, 20, '1800', '2023-04-03 09:36:24', '2023-04-03', 'order placed', '');
+(72, 'tiny@gmail.com', 8, 44, 20, '1800', '2023-04-03 09:36:24', '2023-04-03', 'order placed', ''),
+(73, 'georgebenny2023a@mca.ajce.in', 82, 36, 4, '120', '2023-04-19 09:22:57', '2023-04-19', 'order placed', ''),
+(74, 'abilahari2023a@mca.ajce.in', 8, 37, 1, '90', '2023-05-05 14:06:14', '2023-05-05', 'order placed', ''),
+(75, 'tiny@gmail.com', 103, 41, 5, '500', '2023-05-09 14:20:14', '2023-05-09', 'order placed', '');
 
 -- --------------------------------------------------------
 
@@ -204,9 +231,11 @@ CREATE TABLE `tbl_product` (
 --
 
 INSERT INTO `tbl_product` (`pid`, `rid`, `product_category_id`, `name`, `price`, `des`, `qunty`, `date`, `image`, `picStatus`) VALUES
-(8, 61, 14, 'chilly', '90', 'oraganic chilly', 1, '2022-11-26', 'i.jpg', 0),
+(8, 61, 14, 'chilly', '90', 'oraganic chilly', 0, '2022-11-26', 'i.jpg', 0),
 (11, 66, 14, 'tomattoo', '100', 'oraganic', 25, '2023-03-03', 'o.jpg', 0),
-(82, 59, 14, 'Beans', '30', 'natural', 4, '2023-04-06', 'bb.jpg', 0);
+(82, 59, 14, 'Beans', '30', 'natural', 0, '2023-04-06', 'bb.jpg', 0),
+(84, 59, 14, 'chilly', '98', 'very nice', 33, '2023-04-07', 'u.jpg', 0),
+(103, 59, 15, 'apple', '100', 'Very Good', 5, '2023-05-11', 'apple.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -224,7 +253,6 @@ CREATE TABLE `tbl_product_category` (
 --
 
 INSERT INTO `tbl_product_category` (`product_category_id`, `prod_category_name`) VALUES
-(14, 'vegitables'),
 (15, 'fruit');
 
 -- --------------------------------------------------------
@@ -256,7 +284,7 @@ INSERT INTO `tbl_registration` (`rid`, `fname`, `lname`, `phone_no`, `email`, `p
 (60, 'bilal', 'jhon', '7868766765', 'bilal@gmail.com', 'pikaaa'),
 (61, 'rocky', 'baii', '5765564564', 'rocky@gmail.com', 'pala'),
 (62, 'binu', 'babu', '5678654345', 'binu@gmail.com', 'poonjar'),
-(63, 'qwert', 'tom', '4576543135', 'tiny@gmail.com', 'ppp'),
+(63, 'Bilal', 'jhon', '9875676569', 'tiny@gmail.com', 'ppp'),
 (64, 'raman', 'mon', '6238681837', 'raman@gmail.com', 'ppoo'),
 (65, 'ankit', 'bigi', '6238681837', 'ankit2023a@mca.ajce.in', 'Pathanam'),
 (66, 'ben', 'jhonson', '6238681837', 'ben2023a@mca.ajce.in', 'Pala'),
@@ -301,6 +329,12 @@ ALTER TABLE `cart`
 ALTER TABLE `tbl_bank_info`
   ADD PRIMARY KEY (`bank_info_id`),
   ADD KEY `user_type_id` (`user_type_id`);
+
+--
+-- Indexes for table `tbl_complaints`
+--
+ALTER TABLE `tbl_complaints`
+  ADD PRIMARY KEY (`complaints_id`);
 
 --
 -- Indexes for table `tbl_customer_delv_address`
@@ -358,13 +392,19 @@ ALTER TABLE `tbl_user_type`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `caid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `caid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `tbl_bank_info`
 --
 ALTER TABLE `tbl_bank_info`
   MODIFY `bank_info_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_complaints`
+--
+ALTER TABLE `tbl_complaints`
+  MODIFY `complaints_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer_delv_address`
@@ -376,19 +416,19 @@ ALTER TABLE `tbl_customer_delv_address`
 -- AUTO_INCREMENT for table `tbl_customer_order`
 --
 ALTER TABLE `tbl_customer_order`
-  MODIFY `customer_order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `customer_order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `tbl_product_category`
 --
 ALTER TABLE `tbl_product_category`
-  MODIFY `product_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `product_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `tbl_registration`
