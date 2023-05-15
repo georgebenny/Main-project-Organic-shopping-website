@@ -185,7 +185,7 @@ exit();
 				<li><a href="view_products.php">View Products</a></li>
 				<li><a href="customer_view_orders1.php">My Orders</a></li>
 				
-				<li><a href="">My Complaints</a></li>
+				<li><a href="customer_complaints.php">My Complaints</a></li>
 			
 			</ul>
 		
