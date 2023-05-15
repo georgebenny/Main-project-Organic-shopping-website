@@ -12,13 +12,6 @@ $con=mysqli_connect("localhost","root","","organic_shop_db")or die ("Couldnt con
 
 $viewprod="select * FROM ((tbl_customer_order INNER JOIN tbl_product on tbl_customer_order.stock_product_id=tbl_product.pid )INNER JOIN tbl_customer_delv_address
  on tbl_customer_order.delv_adres_id=tbl_customer_delv_address.delv_adres_id and tbl_customer_order.email='$mail' )";
- 
- 
- 
- 
- 
- 
- 
 
 
 $d_seller_prod=mysqli_query($con,$viewprod);
@@ -66,35 +59,6 @@ th, td {
   border-bottom: 1px solid #ddd;
 }
 </style>
-<style>
-
-							.w3l_search{
-								float: left;
-								width: 57%;
-								margin:.1em 0 0em 10em;
-							}
-							.w3l_search input[type="text"]{
-								outline: none;
-								padding: 10px;
-								color: #212121;
-								font-size: 14px;
-								width: 85%;
-								background: #fff;
-								border: 1px solid #999;
-								float: left;
-							}
-							.w3l_search input[type="submit"]{
-								outline: none;
-								padding: 10px 0 9px;
-								width: 15%;
-								border: 1px solid;
-								position: relative;
-								background: #FA1818;
-							}
-							.w3l_search input[type="submit"]:hover{
-								background: url(img-sp.png) no-repeat 14px 5px #84C639;
-							}
-							</style>
 </head>
 <body> 
 	<!--header-->
@@ -140,21 +104,15 @@ th, td {
 					<div class="logo">
 						<font size="4"><strong><i> <b><p style="color:red;">ORGANICSHOPPING </p> </b></i></strong></font>
 					</div>
-					<!--<div class="search">
+					<div class="search">
 						<input type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" >
 						<input type="submit"  value="SEARCH">
 
-					</div>-->
-					<div class="w3l_search" style="margin-top:5px;margin-left:250px">
-									<form action="search_prod_action.php" method="POST">
-										<input type="text" name="product" id="product" placeholder="Search a product..." required>
-										<input type="submit" name="search" id="search" value=" search">
-									</form>
-						</div>
+					</div>
 					<div class="clearfix"> </div>
 				</div>
 				<div class="header-bottom-right">					
-						<div class="account"><a href="customer_profile.php"><span> </span><?php echo $mail?></a></div>
+						<div class="account"><a href="seller_profile.php"><span> </span><?php echo $mail?></a></div>
 							<ul class="login">
 								<li><a href="logout.php"><span> </span>LOGOUT</a></li> 
 							
@@ -203,37 +161,97 @@ th, td {
 		  <div class="  product-grid">
 		  
 		  
+		  <table  id="designs">
+		
+<tr>
+<th>No</th>
 
+<th>mail</th>
+<th> Product Name</th>
+<th> Price</th>
+<th> Quanity of Order  </th>
+<th> Date of Order </th>
+<th>  Order Status  </th>
+<th>Profile PIc </th>
+<th>Add Review</th>
+<th> Add Complente </th>
+
+ </tr>
+ 
+<?php
+$count=1;
+ while($array=mysqli_fetch_array($d_seller_prod))
+	{
+		
+ ?>
+ <tr>
+  <td>
+ <?php echo $count;?>
+ </td>
+<td>
+
+<?php 
+
+echo $array['email'];
+
+//echo  $rowp['name'];?></td>
+
+<td>
+<?php 
+	echo $array['name'];
+?></td>
+<td>
+<?php 
+	echo $array['purchase_price'];
+?></td>
+<td>
+
+<?php 
+echo $array['purchase_qty'];
+?></td>
+<td><?php echo $array['order_date'];?></td>
+<td><?php echo $array['status'];?></td>
+
+<td><img src="uploads/products/<?php echo $rowp['image'] ?>"  class="img-responsive watch-right" alt="image"/></td>
+
+<td><a href="viewsellerproduct.php?rid=<?php echo $array['rid'];?>&action=edit" background="#FF5733 "; style="color:red;" ><b>Post Review</b></a><td> 
+<td><a href="viewsellerproduct.php?rid=<?php echo $array['rid'];?>&action=edit" background="#FF5733 "; style="color:red;" ><b>Post complate</b></a><td> 
+
+
+
+</tr>
+ 
+<?php
+$count++;
+ } ?>
+ 
+
+</table>
+</form>
 		  <form action="viewproduct.php" method="POST" name="prod" id="prod">
 			<div class="content_box">
 			   	<div class="left-grid-view grid-view-left">
-			   	   	 <img src="images/<?php echo $rowp['image'] ?>"  class="img-responsive watch-right" alt="image"/style="width:300px;height:200px;">
+			   	   	 <img src="uploads/products/<?php echo $rowp['image'] ?>"  class="img-responsive watch-right" alt="image"/style="width:300px;height:200px;">
 				   	   	<div class="mask">
 	                        <div class="info">Quick View</div>
 			            </div>
 				   	  
 				</div>
-				   <b> <b>  <?php    ;
+				   <b> <b>  <?php   echo $rowp['email'] ;
 					//$_SESSION['pname']=$rowp['name'];
 					?></b>
 					<br>
 					Product Name :<?php   echo $rowp['name'] ?> <br>
-				       Quanity of Order :<?php   echo $rowp['purchase_qty'] ?> <br>
+				       Quanity of Order <?php   echo $rowp['purchase_qty'] ?> <br>
 					   
-				    Date of Order:<style="color:red;">  Rs.<?php   echo $rowp['order_date'] ?> <br>
-				    Order Status :<?php   echo $rowp['status'] ?></b><br>
-<a href="html to pdf export/index.php ?customer_order_id=<?php echo $rowp['customer_order_id'];?>" class="btn btn-info">Download Order Summary </a><br><br>
-<a href="add_comp.php ?customer_order_id=<?php echo $rowp['customer_order_id'];?>" class="btn btn-info">Add Complaint </a><br><br>
+				    Date of Order<h3 style="color:red;">  Rs.<?php   echo $rowp['order_date'] ?> <br></h3>
+				    Order Status <?php   echo $rowp['status'] ?></b><br>
+				 
 				 <input type="text" name="prod_id" id="prod_id" value="<?php   echo $rowp['pid'] ?>" hidden>
 				 <br>
-			
 				
-				 <!--<a href="add_complaint.php?pid=<?php echo $rowp['customer_order_id'];?>&action=edit" background="#FF5733 "; style="color:blue;" ><b>Add Review</b></a>-->
-				 
-                   <!--<input type="submit" name="add_complaint" id="add_complaint" value="Post Complaint" class="button1" style=" background-color: #004CBF;"></ class="button1" ></td>-->
-				   
-<!--<a href="delete_seller_prod.php?pid=<?php echo $rowp['pid'];?>&action=delete" background="green";  onclick="return (confirm('Are You Sure To Delete The Record?'));" style="color:red;" ><b>complante </b></a>-->
-
+				 <a href="delete_seller_prod.php?pid=<?php echo $rowp['pid'];?>&action=edit" background="#FF5733 "; style="color:blue;" ><b>Add Review</b></a>   
+<a href="delete_seller_prod.php?pid=<?php echo $rowp['pid'];?>&action=delete" background="green";  onclick="return (confirm('Are You Sure To Delete The Record?'));" style="color:red;" ><b>complante </b></a>
 		<!--<Button name="edit" id="edit" class="btn btn-danger btn-sm remove" style="background-color:#FE1104 "> Edit</Button>
 	 <!--<Button name="delete" id="delete" class="btn btn-danger btn-sm remove"style="background-color:#FE1104 " > Delete</Button>-->
 				 </br>
@@ -254,7 +272,7 @@ th, td {
 					<h3 class="cate">MENU</h3>
 		   <ul class="menu">
 		 <ul class="kid-menu">
-		<li><a href="customer_home.php"> Home</a></li>
+		<li><a href="seller_home.php"> Home</a></li>
 		</ul>
 		<li class="item2"><a href="#">Profile<img class="arrow-img " src="images/arrow1.png" alt=""/></a>
 			<ul class="cute">
@@ -270,8 +288,6 @@ th, td {
 				
 				<!--<li><a href="product.php">add product</a></li>-->
 				<li><a href="view_products.php">View Products</a></li>
-				<li><a href="customer_view_orders1.php">My Orders</a></li>
-				<li><a href="#">My Complaints</a></li>
 			
 				
 				
@@ -317,12 +333,23 @@ th, td {
 	<div class="footer-top">
 			<div class="container">
 				<div class="latter">
-					
-					
+					<h6>NEWS-LETTER</h6>
+					<div class="sub-left-right">
+						<form>
+							<input type="text" value="Enter email here"onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter email here';}" />
+							<input type="submit" value="SUBSCRIBE" />
+						</form>
 					</div>
 					<div class="clearfix"> </div>
 				</div>
-				 </div>
+				<div class="latter-right">
+					<p>FOLLOW US</p>
+					<ul class="face-in-to">
+						<li><a href="#"><span> </span></a></li>
+						<li><a href="#"><span class="facebook-in"> </span></a></li>
+						<div class="clearfix"> </div>
+					</ul>
+					<div class="clearfix"> </div>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
